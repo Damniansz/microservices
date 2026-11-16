@@ -22,11 +22,14 @@ def crear_producto(db: Session, producto: ProductoCreate):
 
 # Actualizar producto
 def actualizar_producto(db: Session, codigo: int, producto: ProductoCreate):
+    # Verificar si el producto existe
     producto_existente = obtener_productos_id(db, codigo)
 
+    # Si el producto no existe, retornar None
     if not producto_existente:
         return None
 
+    # Actualizar los campos del producto existente con los nuevos valores
     producto_existente.nombre = producto.nombre
     producto_existente.descripcion = producto.descripcion
     producto_existente.precio = producto.precio
