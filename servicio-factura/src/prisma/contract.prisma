@@ -17,7 +17,6 @@ model Factura {
 //Lo que va a estar dentro 
 type DetalleFactura {
   codigo Int32
-  cod_factura Int32
   cod_producto Int32
   cantidad Int32
   subtotal Double
