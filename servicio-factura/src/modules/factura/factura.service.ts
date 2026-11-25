@@ -3,12 +3,14 @@ import { db } from '../../prisma/db.js';
 import { Factura } from '../../models/factura.model.js';
 import { DetalleFactura } from '../../models/detalle-factura.model.js';
 import { ProductoClienteService } from '../../services/producto-cliente.service.js';
+import { ClienteServicioService } from '../../services/cliente-servicio.service.js';
 
 @Injectable()
 export class FacturaService {
     //Constructor para inyectar el servicio de productos
     constructor(
-        private readonly productoClienteService: ProductoClienteService
+        private readonly productoClienteService: ProductoClienteService,
+        private readonly clienteServicioService: ClienteServicioService
     ) { };
 
     //SOLO FACTURA
@@ -19,6 +21,9 @@ export class FacturaService {
         if (factura) {
             throw new ConflictException("Codigo ya existente");
         }
+
+        await this.clienteServicioService.validar(data.cod_cliente);
+
         return db.orm.Factura.create({ ...data, fecha: new Date(data.fecha) });
     }
 
