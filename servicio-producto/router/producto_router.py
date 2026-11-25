@@ -10,7 +10,7 @@ router = APIRouter(
     tags=["productos"]
 )
 
-@router.get("/", response_model=list[ProductoResponse])
+@router.get("", response_model=list[ProductoResponse])
 # Listar productos
 def listar_productos(db: Session = Depends(obtener_db)):
     return producto_controller.obtener_productos(db)
@@ -24,7 +24,7 @@ def buscar_producto(codigo: int, db: Session = Depends(obtener_db)):
     return producto
 
 #Registrar producto
-@router.post("/", response_model=ProductoResponse)
+@router.post("", response_model=ProductoResponse)
 def registrar_producto(producto: ProductoCreate, db: Session = Depends(obtener_db)):
     return producto_controller.crear_producto(db, producto)
 
